@@ -51,6 +51,7 @@ func NewMongoRepository(mongoURl, mongoDB string, mongoTimeout int) (shortener.R
 	return repo, nil
 }
 
+// Find finds a url in out database based on the key "code"
 func (r *mongoRepository) Find(code string) (*shortener.Redirect, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
@@ -69,6 +70,7 @@ func (r *mongoRepository) Find(code string) (*shortener.Redirect, error) {
 	return redirect, nil
 }
 
+// Store inserts a redirect object into our database
 func (r *mongoRepository) Store(redirect *shortener.Redirect) error {
 	ctx, cancel := context.WithTimeout(context.Background(), r.timeout)
 	defer cancel()
