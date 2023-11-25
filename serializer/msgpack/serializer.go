@@ -20,7 +20,7 @@ func (r *Redirect) Decode(input []byte) (*shortener.Redirect, error) {
 }
 
 // Encode transforms our custom (Redirect) object into json.
-func (r *Redirect) Endcode(input *shortener.Redirect) ([]byte, error) {
+func (r *Redirect) Encode(input *shortener.Redirect) ([]byte, error) {
 	rawMsg, err := msgpack.Marshal(input)
 	if err != nil {
 		return nil, errors.Wrap(err, "serializer.Redirect.Encode")
