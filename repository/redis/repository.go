@@ -41,6 +41,7 @@ func (r *redisRepository) generateKey(code string) string {
 	return fmt.Sprintf("redirect:%s", code)
 }
 
+// Find returns a redirect object based on a given key
 func (r *redisRepository) Find(code string) (*shortener.Redirect, error) {
 	redirect := &shortener.Redirect{}
 	key := r.generateKey(code)
@@ -63,6 +64,7 @@ func (r *redisRepository) Find(code string) (*shortener.Redirect, error) {
 	return redirect, nil
 }
 
+// Store insert a redirect object into the redis database
 func (r *redisRepository) Store(redirect *shortener.Redirect) error {
 	key := r.generateKey(redirect.Code)
 	data := map[string]interface{}{
