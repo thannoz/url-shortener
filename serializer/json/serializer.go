@@ -9,7 +9,7 @@ import (
 
 type Redirect struct{}
 
-// Decode transforms json into our custom (Redirect) object.
+// Decode transforms the json-input into our custom (Redirect) object.
 func (r *Redirect) Decode(input []byte) (*shortener.Redirect, error) {
 	redirect := &shortener.Redirect{}
 

@@ -18,13 +18,17 @@ type redirectService struct {
 	redirectRepo RedirectRepository
 }
 
+func NewRedirectService(redirectRepo RedirectRepository) RedirectService {
+	return &redirectService{redirectRepo}
+}
+
 // Find calls the repository and returns its find method
 func (r *redirectService) Find(code string) (*Redirect, error) {
 	return r.redirectRepo.Find(code)
 }
 
-// Store validates the redirect struct.
-// Generates a short code and time and call the store method of RedirectRepository
+// Store validates the redirect (object) struct.
+// Generates a short code, sets timestamp and call the store method of RedirectRepository
 func (r *redirectService) Store(redirect *Redirect) error {
 	if err := validate.Validate(redirect); err != nil {
 		return errs.Wrap(ErrRedirectInvalid, "service.Redirect.Store")
@@ -33,8 +37,4 @@ func (r *redirectService) Store(redirect *Redirect) error {
 	redirect.Code = shortid.MustGenerate()
 	redirect.CreatedAt = time.Now().UTC().Unix()
 	return r.redirectRepo.Store(redirect)
-}
-
-func NewRedirectService(redirectRepo RedirectRepository) RedirectService {
-	return &redirectService{redirectRepo}
 }
